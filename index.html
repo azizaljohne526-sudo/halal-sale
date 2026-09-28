@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>حلال أبو خالد</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f7f4;
+  color:#17372d;
+}
+.container{
+  max-width:760px;
+  margin:auto;
+  padding:35px 18px;
+}
+.card{
+  background:white;
+  border-radius:24px;
+  padding:30px;
+  box-shadow:0 8px 28px #0002;
+  text-align:center;
+}
+h1{
+  color:#10583f;
+  margin:5px 0 10px;
+}
+.subtitle{
+  color:#666;
+  margin-bottom:30px;
+}
+.price{
+  font-size:42px;
+  font-weight:bold;
+  color:#10583f;
+  margin:20px 0;
+}
+.features{
+  text-align:right;
+  line-height:2.2;
+  background:#f6faf8;
+  padding:20px;
+  border-radius:18px;
+  margin:20px 0;
+}
+button{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:17px;
+  margin-top:12px;
+  font-size:19px;
+  cursor:pointer;
+}
+.buy{
+  background:#10583f;
+  color:white;
+  font-weight:bold;
+}
+.contact{
+  background:#e9f3ee;
+  color:#10583f;
+}
+.note{
+  margin-top:20px;
+  color:#777;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <h1>🐑 برنامج حلال أبو خالد</h1>
+    <div class="subtitle">برنامج إدارة قطيع الضأن</div>
+
+    <div class="price">نسخة مرخصة</div>
+
+    <div class="features">
+      ✅ سجل القطيع<br>
+      ✅ تسجيل ومتابعة المواليد<br>
+      ✅ البيع والمشتريات والمصاريف<br>
+      ✅ تسجيل النفوق والتطعيمات<br>
+      ✅ جرد الحلال<br>
+      ✅ تقارير النعاج والمواليد<br>
+      ✅ تنبيهات الولادة والتطعيمات<br>
+      ✅ حساب الربح والخسارة<br>
+      ✅ سجل المشترين<br>
+      ✅ نسخة احتياطية للبيانات<br>
+      🔐 تفعيل خاص لكل جهاز
+    </div>
+
+    <button class="buy" onclick="contactOwner()">
+      طلب شراء البرنامج
+    </button>
+
+    <button class="contact" onclick="contactOwner()">
+      تواصل مع أبو خالد
+    </button>
+
+    <div class="note">
+      صاحب البرنامج: عزيز مصلح الجهني — أبو خالد
+    </div>
+
+  </div>
+</div>
+
+<script>
+function contactOwner(){
+  const phone="966564554878";
+  const message=encodeURIComponent(
+    "السلام عليكم أبو خالد، أرغب في شراء برنامج حلال أبو خالد."
+  );
+
+  window.location.href=
+    "https://wa.me/"+phone+"?text="+message;
+}
+</script>
+
+</body>
+</html>
