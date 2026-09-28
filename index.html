@@ -123,6 +123,158 @@ function contactOwner(){
     "https://wa.me/"+phone+"?text="+message;
 }
 </script>
+<style>
+#activationLock{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:#f3f7f4;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  direction:rtl;
+  font-family:Arial,sans-serif;
+}
+#activationBox{
+  width:min(600px,100%);
+  background:#fff;
+  padding:30px 22px;
+  border-radius:22px;
+  box-shadow:0 8px 28px #0002;
+  text-align:center;
+}
+#activationBox h2{color:#10583f;font-size:30px}
+#activationBox input{
+  width:100%;
+  padding:16px;
+  margin:8px 0;
+  border:1px solid #ccc;
+  border-radius:12px;
+  font-size:20px;
+  text-align:center;
+}
+#activationBox button{
+  width:100%;
+  padding:16px;
+  margin-top:10px;
+  border:0;
+  border-radius:12px;
+  background:#10583f;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+}
+#activationBox .sendDevice{
+  background:#e9f3ee;
+  color:#10583f;
+}
+#deviceNumber{
+  font-size:22px;
+  font-weight:bold;
+  direction:ltr;
+  margin:15px 0;
+}
+#activationMsg{
+  margin-top:12px;
+  font-weight:bold;
+}
+</style>
 
+<div id="activationLock">
+  <div id="activationBox">
+    <h2>🔐 تفعيل حلال أبو خالد</h2>
+    <p>رقم جهازك:</p>
+    <div id="deviceNumber"></div>
+
+    <button class="sendDevice" onclick="sendDeviceNumber()">
+      📱 إرسال رقم الجهاز لأبو خالد
+    </button>
+
+    <input id="activationCode"
+           type="text"
+           placeholder="أدخل كود التفعيل">
+
+    <button onclick="activateDevice()">
+      تفعيل البرنامج
+    </button>
+
+    <div id="activationMsg"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const DEVICE_KEY = "halal_sale_device_id";
+  const ACTIVE_KEY = "halal_sale_activated";
+
+  let deviceId = localStorage.getItem(DEVICE_KEY);
+
+  if (!deviceId) {
+    const part1 = Math.random().toString(36).substring(2,6).toUpperCase();
+    const part2 = Math.random().toString(36).substring(2,6).toUpperCase();
+    deviceId = "AK-" + part1 + "-" + part2;
+    localStorage.setItem(DEVICE_KEY, deviceId);
+  }
+
+  window.HALAL_DEVICE_ID = deviceId;
+
+  function makeActivationCode(id) {
+    let hash = 2166136261;
+
+    for (let i = 0; i < id.length; i++) {
+      hash ^= id.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+
+    const code = (hash >>> 0)
+      .toString(16)
+      .toUpperCase()
+      .padStart(8, "0");
+
+    return "AK-" + code.slice(0,4) + "-" + code.slice(4,8);
+  }
+
+  window.makeHalalActivationCode = makeActivationCode;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("deviceNumber").textContent = deviceId;
+
+    if (localStorage.getItem(ACTIVE_KEY) !== "yes") {
+      document.getElementById("activationLock").style.display = "flex";
+    }
+  });
+
+  window.activateDevice = function () {
+    const entered = document
+      .getElementById("activationCode")
+      .value
+      .trim()
+      .toUpperCase();
+
+    const correct = makeActivationCode(deviceId);
+
+    if (entered === correct) {
+      localStorage.setItem(ACTIVE_KEY, "yes");
+      document.getElementById("activationLock").style.display = "none";
+      alert("تم تفعيل حلال أبو خالد بنجاح");
+    } else {
+      document.getElementById("activationMsg").textContent =
+        "❌ كود التفعيل غير صحيح";
+    }
+  };
+
+  window.sendDeviceNumber = function () {
+    const phone = "966564554878";
+    const message = encodeURIComponent(
+      "السلام عليكم أبو خالد، أريد تفعيل برنامج حلال أبو خالد.\nرقم الجهاز: " +
+      deviceId
+    );
+
+    window.location.href =
+      "https://wa.me/" + phone + "?text=" + message;
+  };
+})();
+</script>
 </body>
 </html>
