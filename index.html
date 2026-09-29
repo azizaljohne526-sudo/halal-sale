@@ -232,7 +232,8 @@ function contactOwner(){
       .toUpperCase()
       .padStart(8, "0");
 
-    return "AK-" + code.slice(0,4) + "-" + code.slice(4,8);
+    const part2 = id.replace(/[^A-Z0-9]/g,"").slice(-4).padStart(4,"0");
+return "AK-" + code.slice(0,4) + "-" + code.slice(4,8) + "-" + part2;
   }
 
   window.makeHalalActivationCode = makeActivationCode;
